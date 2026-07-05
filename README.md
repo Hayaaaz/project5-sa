@@ -1,5 +1,6 @@
 Project 5 — Watchman (Normal Tier)
-## This project builds a baseline from baseline_flows.csv and detects anomalies in window_flows.csv.
+
+This project builds a baseline from baseline_flows.csv and detects anomalies in window_flows.csv.
 
 ## Files
 
