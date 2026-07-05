@@ -1,12 +1,12 @@
 Project 5 — Watchman (Normal Tier)
 This project builds a baseline from baseline_flows.csv and detects anomalies in window_flows.csv.
 
-Files
-baseline_reader.py — builds per‑host baseline (p95, normal ports, normal destinations)
+##Files
+**baseline_reader.py** builds per‑host baseline (p95, normal ports, normal destinations)
 
-flow_detector.py — detects exfiltration, port scans, and beaconing
+**flow_detector.py** detects exfiltration, port scans, and beaconing
 
-REPORT.docx — plain‑English explanation of findings
+**REPORT.docx** plain‑English explanation of findings
 
 Run
 Code
