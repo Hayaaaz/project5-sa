@@ -1,0 +1,70 @@
+Project 5 — Watchman Normal Tier Report
+Author: Haya Hussein
+Date: July 4th, 2026
+
+Overview
+I built a baseline of normal network behavior using baseline_flows.csv.
+Then I analyzed the new activity in window_flows.csv using my anomaly detector.
+The detector identified three anomalies:
+
+Exfiltration
+
+Port Scan / Lateral Movement
+
+Beaconing
+
+Each anomaly is explained below:
+
+1. Exfiltration — Host 10.20.4.45
+Finding
+Host 10.20.4.45 sent 1.8 GB of outbound data in a single flow.
+
+Baseline
+This host normally sends about 2 KB of outbound data.
+Its baseline p95 is 1993 bytes.
+
+Evidence
+My detector flagged this because:
+
+Code
+bytes_out 1887436800.0 > 2 × p95 1993.2
+
+This host suddenly sent an extremely large amount of data outside the network, far beyond anything it normally does.
+This is a classic sign of data exfiltration, in which an attacker steals information and exfiltrates it from the environment.
+
+2. Port Scan / Lateral Movement — Host 10.20.4.77
+Finding
+Host 10.20.4.77 contacted 6 new internal destinations and 3 new ports it has never used before.
+
+Baseline
+This host normally talks only to 10.20.4.20 on port 443.
+
+Evidence
+My detector flagged this because:
+
+Code
+6 new destinations, 3 new ports vs baseline
+
+This host suddenly began probing many internal machines on ports such as 22, 445, and 3389.
+These ports are commonly targeted during lateral movement.
+This behavior strongly suggests a port scan, in which an attacker attempts to discover new systems to compromise.
+
+3. Beaconing — Host 10.20.4.62
+Finding
+Host 10.20.4.62 repeatedly contacted 203.0.113.77 on port 8443 at perfectly regular intervals.
+
+Baseline
+This host normally communicates only with internal systems on port 8080.
+
+Evidence
+My detector flagged this because:
+
+Code
+Regular intervals: mean 300.00s, std 0.00s
+
+The host contacted the same external IP every 300 seconds, with zero variation.
+This is classic command‑and‑control beaconing, where malware checks in with an attacker’s server at fixed intervals.
+
+Conclusion
+All three anomalies — exfiltration, port scanning, and beaconing — were successfully detected using the baseline and scoring logic.
+Each alert includes clear evidence and an explanation suitable for a non‑technical director.
