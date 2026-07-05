@@ -1,7 +1,10 @@
 import pandas as pd
 
 # Load the CSV
-df = pd.read_csv("baseline_flows.csv")
+df = pd.read_csv("code/baseline_flows.csv")
+
+#keep only rows where src_ip is a valid IPv4 address
+df = df[df["src_ip"].str.contains(r"^\d+\.\d+\.\d+\.\d+$", na=False)]
 
 # Group by host
 grouped = df.groupby("src_ip")
