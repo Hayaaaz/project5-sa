@@ -4,7 +4,7 @@ from baseline_reader import baseline
 # Load window flows
 window = pd.read_csv("code/window_flows.csv")
 
-# Filter invalid rows (same fix as baseline)
+# Filter invalid rows
 window = window[window["src_ip"].str.contains(r"^\d+\.\d+\.\d+\.\d+$", na=False)]
 
 print("=== WINDOW FLOWS LOADED ===")
